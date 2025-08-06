@@ -1,0 +1,27 @@
+# Evita subir el entorno virtual
+venv/
+
+# Archivos de Python compilados
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de entorno
+.env
+
+# Archivos de configuración específicos de VS Code
+.vscode/
+
+# Archivos de bases de datos locales o caché
+*.sqlite3
+instance/
+
+# Logs y otros
+*.log
+*.bak
+*.tmp
+*.swp
+
+# Windows
+Thumbs.db

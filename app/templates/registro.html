@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro</title>
+</head>
+<body>
+    <h2>Registro de Usuario</h2>
+    <form action="{{ url_for('registro_post') }}" method="POST">
+        <label>Nombre:</label><br>
+        <input type="text" name="nombre" required><br>
+        <label>Apellido:</label><br>
+        <input type="text" name="apellido" required><br>
+        <label>Mail:</label><br>
+        <input type="email" name="mail" required><br>
+        <label>Legajo:</label><br>
+        <input type="text" name="legajo" required><br><br>
+        <button type="submit">Registrarse</button>
+    </form>
+    <p>¿Ya tenés cuenta? <a href="{{ url_for('login') }}">Iniciá sesión</a></p>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>{% for msg in messages %}
+          <li>{{ msg }}</li>
+        {% endfor %}</ul>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
