@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
+import json
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta_segura'
@@ -125,6 +126,38 @@ def list():
 
     incidentes = Incidente.query.all()
     return render_template('list.html', incidentes=incidentes)
+
+@app.route('/map')
+def mapa():
+    if 'usuario' not in session:
+        return redirect(url_for('login'))
+
+    incidentes = Incidente.query.all()
+
+    # Ejemplo: cada sector tiene coordenadas fijas (x,y) en el plano
+    coordenadas = {
+        "Aula 1": [700, 690],
+        "Aula 2": [810, 690],
+        "Aula 3": [920, 690],
+        "Aula 4": [1030, 690],
+        "Biblioteca": [800, 1000]
+    }
+
+    incidentes_json = []
+    for inc in incidentes:
+        x, y = coordenadas.get(inc.sector, [100,100])  # valor por defecto
+        incidentes_json.append({
+            "descripcion": inc.descripcion,
+            "sector": inc.sector,
+            "nombre": inc.nombre,
+            "apellido": inc.apellido,
+            "mail": inc.mail,
+            "fecha": inc.fecha.strftime("%Y-%m-%d %H:%M"),
+            "x": x,
+            "y": y
+        })
+
+    return render_template("map.html", incidentes_json=json.dumps(incidentes_json))
 
 with app.app_context():
     db.create_all()
