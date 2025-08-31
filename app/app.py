@@ -140,7 +140,16 @@ def mapa():
         "Aula 2": [810, 690],
         "Aula 3": [920, 690],
         "Aula 4": [1030, 690],
-        "Biblioteca": [800, 1000]
+        "Aula 5": [700, 900],
+        "Aula 6": [810, 900],
+        "Aula 7": [920, 900],
+        "Aula 8": [1030, 900],
+        "Administracion": [1030, 900],
+        "Sala Video": [1030, 900],
+        "Sala Computacion": [810, 900],
+        "Aula nueva": [920, 900],
+        "Sala Profes": [1030, 900],
+        "Oficina Director": [800, 1000]
     }
 
     incidentes_json = []
