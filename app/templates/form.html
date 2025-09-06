@@ -1,38 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Reportar Incidente</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <title>Reportar Incidente</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+      margin-bottom: 15px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+  </style>
 </head>
-<body class="container mt-5">
-    <h2>Reportar Incidente</h2>
-    <form method="POST" action="{{ url_for('form') }}">
-        <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripción del Incidente</label>
-            <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
-        </div>
+<body class="container">
+  <h2>Reportar Incidente</h2>
+  <form method="POST">
+    <!-- Mapa clickeable -->
+    <label>Seleccione el lugar del incidente:</label>
+    <div id="map"></div>
 
-        <div class="mb-3">
-            <label for="sector" class="form-label">Sector</label>
-            <select class="form-select" id="sector" name="sector" required>
-                <option value="Aula 1">Aula 1</option>
-                <option value="Aula 2">Aula 2</option>
-                <option value="Aula 3">Aula 3</option>
-                <option value="Aula 4">Aula 4</option>
-                <option value="Aula 5">Aula 5</option>
-                <option value="Aula 6">Aula 6</option>
-                <option value="Aula 7">Aula 7</option>
-                <option value="Aula 8">Aula 8</option>
-                <option value="Administracion">Administracion</option>
-                <option value="Sala Video">Sala Video</option>
-                <option value="Sala Computacion">Sala Computacion</option>
-                <option value="Aula nueva">Aula nueva</option>
-                <option value="Sala Profes">Sala Profes</option>
-                <option value="Oficina Director">Oficina Director</option>
-            </select>
-        </div>
+    <!-- Campos ocultos para guardar coordenadas -->
+    <input type="hidden" id="x" name="x">
+    <input type="hidden" id="y" name="y">
+    <input type="hidden" id="sector" name="sector">
 
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
+    <!-- Descripción -->
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripción del Incidente</label>
+      <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+
+  <script>
+    // Crear mapa Leaflet
+    var map = L.map('map', { crs: L.CRS.Simple, minZoom: -1 });
+
+    // Definir tamaño de la imagen del plano (ajustar según resolución real de tu imagen)
+    var bounds = [[0,0], [1000,1500]];
+
+    // Fondo del mapa con tu plano (asegurate de ponerlo en /static/img/Plano.jpg)
+    L.imageOverlay("{{ url_for('static', filename='../static/img/Plano.jpg') }}", bounds).addTo(map);
+    map.fitBounds(bounds);
+
+    var marker;
+
+    // Evento click
+    map.on('click', function(e) {
+      if (marker) {
+        map.removeLayer(marker);
+      }
+      marker = L.marker(e.latlng).addTo(map);
+
+      // Guardar coordenadas en el form
+      document.getElementById('x').value = Math.round(e.latlng.lng);
+      document.getElementById('y').value = Math.round(e.latlng.lat);
+      document.getElementById('sector').value = "Seleccionado en mapa";
+    });
+  </script>
 </body>
 </html>

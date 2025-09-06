@@ -26,7 +26,6 @@ class Usuario(db.Model):
     mail = db.Column(db.String(120), unique=True, nullable=False)
     legajo = db.Column(db.String(20), unique=True, nullable=False)
 
-# Incidente en base de datos
 class Incidente(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     descripcion = db.Column(db.Text, nullable=False)
@@ -35,6 +34,10 @@ class Incidente(db.Model):
     apellido = db.Column(db.String(100), nullable=False)
     mail = db.Column(db.String(120), nullable=False)
     fecha = db.Column(db.DateTime, default=db.func.current_timestamp())
+    x = db.Column(db.Integer)   # nueva columna
+    y = db.Column(db.Integer)   # nueva columna
+
+
 
 
 @app.route('/')
@@ -101,6 +104,8 @@ def form():
     if request.method == 'POST':
         descripcion = request.form['descripcion']
         sector = request.form['sector']
+        x = request.form.get('x', None)
+        y = request.form.get('y', None)
 
         usuario = session['usuario']
 
@@ -109,12 +114,15 @@ def form():
             sector=sector,
             nombre=usuario['nombre'],
             apellido=usuario['apellido'],
-            mail=usuario['mail']
+            mail=usuario['mail'],
+            x=int(x) if x else None,
+            y=int(y) if y else None
         )
         db.session.add(nuevo_incidente)
         db.session.commit()
         flash("Incidente reportado con éxito.")
         return redirect(url_for('list'))
+
 
     return render_template('form.html')
 
@@ -134,27 +142,8 @@ def mapa():
 
     incidentes = Incidente.query.all()
 
-    # Ejemplo: cada sector tiene coordenadas fijas (x,y) en el plano
-    coordenadas = {
-        "Aula 1": [700, 690],
-        "Aula 2": [810, 690],
-        "Aula 3": [920, 690],
-        "Aula 4": [1030, 690],
-        "Aula 5": [700, 900],
-        "Aula 6": [810, 900],
-        "Aula 7": [920, 900],
-        "Aula 8": [1030, 900],
-        "Administracion": [1030, 900],
-        "Sala Video": [1030, 900],
-        "Sala Computacion": [810, 900],
-        "Aula nueva": [920, 900],
-        "Sala Profes": [1030, 900],
-        "Oficina Director": [800, 1000]
-    }
-
     incidentes_json = []
     for inc in incidentes:
-        x, y = coordenadas.get(inc.sector, [100,100])  # valor por defecto
         incidentes_json.append({
             "descripcion": inc.descripcion,
             "sector": inc.sector,
@@ -162,11 +151,12 @@ def mapa():
             "apellido": inc.apellido,
             "mail": inc.mail,
             "fecha": inc.fecha.strftime("%Y-%m-%d %H:%M"),
-            "x": x,
-            "y": y
+            "x": inc.x or 100,   # fallback
+            "y": inc.y or 100    # fallback
         })
 
     return render_template("map.html", incidentes_json=json.dumps(incidentes_json))
+
 
 with app.app_context():
     db.create_all()
