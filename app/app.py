@@ -11,14 +11,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Usuario en base de datos
-# class Usuario(db.Model):
-#   id = db.Column(db.Integer, primary_key=True)
-#   nombre = db.Column(db.String(100), nullable=False)
-#   apellido = db.Column(db.String(100), nullable=False)
-#   mail = db.Column(db.String(120), unique=True, nullable=False)
-#   legajo = db.Column(db.String(20), unique=True, nullable=False)
-
-# Usuario en base de datos
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
@@ -36,8 +28,6 @@ class Incidente(db.Model):
     fecha = db.Column(db.DateTime, default=db.func.current_timestamp())
     x = db.Column(db.Integer)   # nueva columna
     y = db.Column(db.Integer)   # nueva columna
-
-
 
 
 @app.route('/')

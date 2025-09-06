@@ -1,0 +1,107 @@
+/* Fondo general */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Archivo Black", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-image: url("../static/img/Fondo2.png");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* ocupa toda la pantalla */
+    color: #fcc044; /* texto amarillo en general */
+  }
+  
+  /* Caja de login */
+  form {
+    background-color: #000; /* recuadro negro */
+    border: 2px solid #fcc044; /* borde amarillo */
+    border-radius: 12px;
+    padding: 30px;
+    width: 350px;
+    box-shadow: 0 0 15px rgba(252, 192, 68, 0.5);
+    text-align: center;
+  }
+  
+  /* Título */
+  h2 {
+    margin-bottom: 20px;
+    color: #fcc044;
+  }
+  
+  /* Labels */
+  label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #fcc044;
+    font-weight: bold;
+  }
+  
+  /* Inputs */
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #a3a3a3;
+    background-color: #f7f1e4;
+    color: #000;
+    font-size: 1rem;
+  }
+  
+  /* Botón */
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #fcc044;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  button:hover {
+    background-color: #d4a932; /* amarillo más oscuro */
+  }
+  
+  /* Links */
+  a {
+    color: #fcc044;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Alertas */
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+  }
+  
+  li {
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+  
+  li:contains("exitoso") {
+    background-color: #28a745; /* verde */
+    color: #fff;
+  }
+  
+  li:contains("incorrectos") {
+    background-color: #dc3545; /* rojo */
+    color: #fff;
+  }
+  
+  

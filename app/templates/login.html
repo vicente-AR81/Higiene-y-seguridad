@@ -2,17 +2,22 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="../static/login.css">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+    </style> 
 </head>
 <body>
-    <h2>Iniciar Sesión</h2>
     <form action="{{ url_for('login_post') }}" method="POST">
-        <label>Mail:</label><br>
+        <h2>APLICACIÓN INCIDENTES</h2>
+        <h3>INICIAR SESIÓN</h2>
+        <label>MAIL:</label><br>
         <input type="email" name="mail" required><br>
-        <label>Legajo:</label><br>
+        <label>LEGAJO:</label><br>
         <input type="text" name="legajo" required><br><br>
-        <button type="submit">Ingresar</button>
+        <button type="submit">INGRESAR</button>
+        <p>¿NO TIENES CUENTA? <a href="{{ url_for('registro') }}">REGISTRATE</a></p>
     </form>
-    <p>¿No tenés cuenta? <a href="{{ url_for('registro') }}">Registrate</a></p>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul>{% for msg in messages %}
