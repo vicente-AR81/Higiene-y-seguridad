@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    font-family: "Archivo Black", sans-serif;
+    background-color: #000;
+    color: #39633b;
+    text-align: center;
+  }
+  
+  /* Banner superior */
+  .banner {
+    background-color: #000;
+    border-bottom: 2px solid #39633b;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .usuario {
+    font-size: 1.2rem;
+  }
+  
+  .btn-logout {
+    background-color: #39633b;
+    color: #000;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  .btn-logout:hover {
+    background-color: #324543;
+  }
+  
+  /* Contenido */
+  .contenido {
+    padding: 40px 20px;
+  }
+  
+  h1 {
+    margin-bottom: 15px;
+  }
+  
+  .intro {
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    font-size: 1rem;
+    color: #f7f1e4;
+  }
+  
+  /* Botones */
+  .botones {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  button {
+    background-color: #39633b;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  button:hover {
+    background-color: #324543;
+  }
+  

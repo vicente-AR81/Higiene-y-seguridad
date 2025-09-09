@@ -3,21 +3,32 @@
 <head>
     <meta charset="UTF-8" />
     <title>Inicio</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../static/index.css">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+    </style> 
 </head>
 <body>
-    <h1>Pagina sobre riesgos e Incidentes</h1>
-    <h1>¡Hola {{ usuario }}!</h1>
-    <a href="{{ url_for('logout') }}">Cerrar sesión</a>
-        <h2>Si dentificaste algun Riesgo e incidente dentro de la empresa, porfavor Envianos tu notificacion</h2>
-        <a href="form">
-            <button>Formulario</button>
-        </a>
-        <a href="list">
-            <button>Lista de Incidentes</button>
-        </a>
-        <a href="map">
-            <button>Mapa de Incidentes</button>
-        </a>
+    <header class="banner">
+        <div class="usuario">
+            ¡Hola {{ usuario.nombre }}!
+        </div>
+        <div class="logout">
+            <a href="{{ url_for('logout') }}" class="btn-logout">Cerrar sesión</a>
+        </div>
+    </header>
+    <main class="contenido">
+        <h1>Pagina sobre riesgos e Incidentes</h1>
+        <p class="intro">
+            Si haz identificado algun incidente o riesgo en el colegio te pedimos que ingreses al
+            formulario y lo reportes.
+        </p>
+
+        <div class="botones">
+            <a href="form"><button>Formulario</button></a>
+            <a href="list"><button>Lista de Incidentes</button></a>
+            <a href="map"><button>Mapa de Incidentes</button></a>
+        </div>
+    </main>
 </body>
 </html>
