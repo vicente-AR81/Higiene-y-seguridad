@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>Lista de Incidentes</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/list.css">
 </head>
-<body class="container mt-5">
+<body>
     <h2>Lista de Incidentes</h2>
-    <table class="table table-striped">
+    <table >
         <thead>
             <tr>
                 <th>Descripción</th>
@@ -28,5 +28,8 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="botones">
+        <a href="/index"><button>Inicio</button></a>
+    </div>
 </body>
 </html>
