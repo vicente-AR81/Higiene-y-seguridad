@@ -1,66 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Reportar Incidente</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <style>
-    #map {
-      height: 400px;
-      width: 100%;
-      margin-bottom: 15px;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-    }
-  </style>
+
+  <!-- Tu CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
 </head>
-<body class="container">
-  <h2>Reportar Incidente</h2>
-  <form method="POST">
-    <!-- Mapa clickeable -->
-    <label>Seleccione el lugar del incidente:</label>
-    <div id="map"></div>
+<body class="page">
+  <div class="card">
+    <h2>Reportar Incidente</h2>
 
-    <!-- Campos ocultos para guardar coordenadas -->
-    <input type="hidden" id="x" name="x">
-    <input type="hidden" id="y" name="y">
-    <input type="hidden" id="sector" name="sector">
+    <form method="POST">
+      <label class="form-label">Seleccione el lugar del incidente:</label>
+      <div id="map"></div>
 
-    <!-- Descripción -->
-    <div class="mb-3">
+      <!-- Campos ocultos -->
+      <input type="hidden" id="x" name="x">
+      <input type="hidden" id="y" name="y">
+      <input type="hidden" id="sector" name="sector">
+
       <label for="descripcion" class="form-label">Descripción del Incidente</label>
-      <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
-    </div>
+      <textarea id="descripcion" name="descripcion" required></textarea>
 
-    <button type="submit" class="btn btn-primary">Enviar</button>
-  </form>
+      <button type="submit" class="btn">Enviar</button>
+    </form>
+  </div>
 
   <script>
-    // Crear mapa Leaflet
+    // Mapa Leaflet
     var map = L.map('map', { crs: L.CRS.Simple, minZoom: -1 });
 
-    // Definir tamaño de la imagen del plano (ajustar según resolución real de tu imagen)
-    var bounds = [[0,0], [1000,1500]];
-
-    // Fondo del mapa con tu plano (asegurate de ponerlo en /static/img/Plano.jpg)
-    L.imageOverlay("{{ url_for('static', filename='../static/img/Plano.jpg') }}", bounds).addTo(map);
+    // Tamaño de la imagen (ajusta a tu plano)
+    var bounds = [[0, 0], [1000, 1500]];
+    L.imageOverlay("{{ url_for('static', filename='img/Plano.jpg') }}", bounds).addTo(map);
     map.fitBounds(bounds);
 
     var marker;
-
-    // Evento click
-    map.on('click', function(e) {
-      if (marker) {
-        map.removeLayer(marker);
-      }
+    map.on('click', function (e) {
+      if (marker) map.removeLayer(marker);
       marker = L.marker(e.latlng).addTo(map);
 
-      // Guardar coordenadas en el form
+      // Guardar coordenadas
       document.getElementById('x').value = Math.round(e.latlng.lng);
       document.getElementById('y').value = Math.round(e.latlng.lat);
       document.getElementById('sector').value = "Seleccionado en mapa";
     });
+
+    // Asegura el cálculo correcto del tamaño del mapa
+    setTimeout(function(){ map.invalidateSize(); }, 100);
   </script>
 </body>
 </html>

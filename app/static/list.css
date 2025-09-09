@@ -7,13 +7,11 @@ body {
     padding: 20px;
   }
   
-  /* Título */
   h2 {
     margin-bottom: 20px;
     color: #39633b;
   }
-  
-  /* Tabla */
+
   table {
     width: 90%;
     margin: 0 auto;
@@ -24,8 +22,7 @@ body {
     overflow: hidden;
     box-shadow: 0 0 20px rgba(23, 250, 3, 0.4);
   }
-  
-  /* Encabezado */
+
   thead {
     background-color: #39633b;
     color: #000;
@@ -37,7 +34,6 @@ body {
     font-size: 0.9rem;
   }
   
-  /* Filas */
   td {
     padding: 10px;
     color: #f7f1e4;
