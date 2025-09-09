@@ -1,43 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <style>
-        #map {
-            height: 600px;
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Mapa de Incidentes</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Tu CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='map.css') }}">
 </head>
-<body>
+<body class="page">
+  <div class="card">
+    <h2>Mapa de Incidentes</h2>
     <div id="map"></div>
+  </div>
 
-    <script>
-        // Inicializamos el mapa sin coordenadas (usamos imagen como fondo)
-        var map = L.map('map', {
-            crs: L.CRS.Simple,  // coordenadas simples en lugar de lat/long
-            minZoom: -1
-        });
+  <script>
+    // Inicializamos el mapa sin coordenadas (usamos imagen como fondo)
+    var map = L.map('map', {
+        crs: L.CRS.Simple,
+        minZoom: -1
+    });
 
-        // Cargar imagen del plano
-        var bounds = [[0,0], [1000,1500]]; // tamaño de la imagen (ajustar según resolución)
-        var image = L.imageOverlay("{{ url_for('static', filename='../static/img/Plano.jpg') }}", bounds).addTo(map);
-        map.fitBounds(bounds);
+    // Cargar imagen del plano
+    var bounds = [[0,0], [1000,1500]];
+    L.imageOverlay("{{ url_for('static', filename='img/Plano.jpg') }}", bounds).addTo(map);
+    map.fitBounds(bounds);
 
-        // Datos de incidentes (inyectados desde Flask en JSON)
-        var incidentes = {{ incidentes_json | safe }};
+    // Incidentes desde Flask
+    var incidentes = {{ incidentes_json | safe }};
 
-        // Pop up o icono
-        incidentes.forEach(function(incidente) {
-            var marker = L.marker([incidente.y, incidente.x]).addTo(map);
-            marker.bindPopup(
-                "<b>Sector:</b> " + incidente.sector + "<br>" +
-                "<b>Descripción:</b> " + incidente.descripcion + "<br>" +
-                "<b>Usuario:</b> " + incidente.nombre + " " + incidente.apellido + "<br>" +
-                "<b>Fecha:</b> " + incidente.fecha
-            );
-        });
-    </script>
+    // Mostrar marcadores
+    incidentes.forEach(function(incidente) {
+      var marker = L.marker([incidente.y, incidente.x]).addTo(map);
+      marker.bindPopup(
+        "<b>Sector:</b> " + incidente.sector + "<br>" +
+        "<b>Descripción:</b> " + incidente.descripcion + "<br>" +
+        "<b>Usuario:</b> " + incidente.nombre + " " + incidente.apellido + "<br>" +
+        "<b>Fecha:</b> " + incidente.fecha
+      );
+    });
+
+    // Forzar el redimensionamiento del mapa al cargar
+    setTimeout(() => map.invalidateSize(), 100);
+  </script>
 </body>
 </html>
