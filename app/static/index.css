@@ -1,75 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 body {
     margin: 0;
     font-family: "Archivo Black", sans-serif;
-    background-color: #000;
-    color: #39633b;
+    background-color: #f0f2f5;
+    color: #1b1b1b;
     text-align: center;
-  }
-  
-  /* Banner superior */
-  .banner {
+}
+
+/* Banner superior */
+.banner {
     background-color: #000;
-    border-bottom: 2px solid #39633b;
+    border-bottom: 2px solid #3ddc97;
     padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .usuario {
+}
+
+.usuario {
     font-size: 1.2rem;
-  }
-  
-  .btn-logout {
-    background-color: #39633b;
-    color: #000;
+    color: #fff;
+}
+
+.btn-logout {
+    background-color: #3ddc97;
+    color: #fff;
     padding: 8px 15px;
     border-radius: 6px;
     text-decoration: none;
     font-weight: bold;
-    transition: background 0.3s;
-  }
-  
-  .btn-logout:hover {
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
     background-color: #324543;
-  }
-  
-  /* Contenido */
-  .contenido {
+}
+
+/* Contenido central */
+.contenido {
     padding: 40px 20px;
-  }
-  
-  h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    background-color: #fff;
+    border: 2px solid #3ddc97;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    animation: fadeIn 1s ease forwards;
+}
+
+.card h1 {
     margin-bottom: 15px;
-  }
-  
-  .intro {
+    text-transform: lowercase;
+}
+
+.card h1::first-letter {
+    text-transform: uppercase;
+}
+
+.intro {
     max-width: 600px;
-    margin: 0 auto 30px auto;
+    margin: 0 auto 20px auto;
     font-size: 1rem;
-    color: #f7f1e4;
-  }
-  
-  /* Botones */
-  .botones {
+    color: #1b1b1b;
+}
+
+/* Imagen centrada y responsiva */
+.card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+/* Botones */
+.botones {
     display: flex;
     justify-content: center;
     gap: 15px;
-  }
-  
-  button {
-    background-color: #39633b;
-    color: #000;
+}
+
+button {
+    background-color: #3ddc97;
+    color: #fff;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     padding: 12px 20px;
     font-size: 1rem;
     cursor: pointer;
     font-weight: bold;
-    transition: background 0.3s;
-  }
-  
-  button:hover {
+    transition: all 0.3s ease;
+}
+
+button:hover {
     background-color: #324543;
-  }
-  
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8" />
     <title>Inicio</title>
     <link rel="stylesheet" href="../static/index.css">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
-    </style> 
 </head>
 <body>
     <header class="banner">
@@ -17,17 +14,19 @@
             <a href="{{ url_for('logout') }}" class="btn-logout">Cerrar sesión</a>
         </div>
     </header>
+
     <main class="contenido">
-        <h1>Pagina sobre riesgos e Incidentes</h1>
-        <p class="intro">
-            Si haz identificado algun incidente o riesgo en el colegio te pedimos que ingreses al
-            formulario y lo reportes.
-        </p>
-        <img href="https://hips.hearstapps.com/hmg-prod/images/2025-porsche-911-gt3-rs-manthey-racing2-6740bc71c0e28.jpg?crop=0.944xw:0.943xh;0,0&resize=640:*">
-        <div class="botones">
-            <a href="/form"><button>Formulario</button></a>
-            <a href="/list"><button>Lista de Incidentes</button></a>
-            <a href="/map"><button>Mapa de Incidentes</button></a>
+        <div class="card">
+            <h1>Pagina sobre riesgos e incidentes</h1>
+            <p class="intro">
+                Si haz identificado algun incidente o riesgo en el colegio te pedimos que ingreses al
+                formulario y lo reportes.
+            </p>
+            <div class="botones">
+                <a href="/form"><button>Formulario</button></a>
+                <a href="/list"><button>Lista de incidentes</button></a>
+                <a href="/map"><button>Mapa de incidentes</button></a>
+            </div>
         </div>
     </main>
 </body>

@@ -1,106 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 body {
     margin: 0;
     padding: 0;
     font-family: "Archivo Black", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    background-color:#324543;
+    background-color: #f0f2f5; 
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh; 
-    color: #39633b;
-  }
-  
-  /* Caja de login */
-  form {
-    background-color: #000; /* recuadro negro */
-    border: 2px solid #39633b; /* borde amarillo */
-    border-radius: 12px;
-    padding: 30px;
-    width: 350px;
-    box-shadow: 0 0 15px rgba(16, 255, 56, 0.5);
+    color: #1b1b1b;
+}
+
+/* Caja de login */
+form {
+    background-color: #ffffff; 
+    border: 2px solid #3ddc97; 
+    border-radius: 15px;
+    padding: 40px 30px;
+    width: 360px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     text-align: center;
-  }
-  
-  /* Título */
-  h2 {
+    animation: fadeIn 1s ease forwards;
+}
+
+/* Títulos con solo primera letra en mayúscula */
+h2, h3 {
+    color: #1b1b1b;
     margin-bottom: 20px;
-    color: #39633b;
-  }
-  
-  /* Labels */
-  label {
-    display: block;
-    text-align: left;
-    margin-bottom: 5px;
-    color: #39633b;
-    font-weight: bold;
-  }
-  
-  /* Inputs */
-  input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    border: 1px solid #a3a3a3;
-    background-color: #f7f1e4;
-    color: #000;
-    font-size: 1rem;
-  }
-  
-  /* Botón */
-  button {
-    width: 100%;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+    text-transform: lowercase;
+}
+
+h2::first-letter,
+h3::first-letter {
+    text-transform: uppercase;
+}
+
+h3 { animation-delay: 0.3s; }
+
+/* Inputs con placeholder centrados */
+input {
+    width: 90%;
     padding: 12px;
-    background-color: #39633b;
-    border: none;
-    border-radius: 6px;
+    margin: 10px auto;
+    display: block;
+    border-radius: 8px;
+    border: 1px solid #d1d1d1;
+    background-color: #f7f7f7;
+    color: #1b1b1b;
     font-size: 1rem;
-    color: #000;
-    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+}
+input:nth-of-type(1) { animation-delay: 0.4s; }
+input:nth-of-type(2) { animation-delay: 0.6s; }
+
+input:focus {
+    border-color: #3ddc97;
+    box-shadow: 0 0 10px rgba(61, 220, 151, 0.5);
+    outline: none;
+    transform: scale(1.02);
+}
+
+/* Botones */
+button {
+    width: 90%;
+    padding: 12px;
+    margin: 10px auto;
+    display: block;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
     font-weight: bold;
-    transition: background 0.3s;
-  }
-  
-  button:hover {
-    background-color: #39633b; /* amarillo más oscuro */
-  }
-  
-  /* Links */
-  a {
-    color: #39633b;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+}
+
+button:nth-of-type(1) { animation-delay: 0.8s; background-color: #3ddc97; color: #fff; }
+button:nth-of-type(2) { animation-delay: 1s; background-color: #3963bb; color: #fff; }
+
+button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* Links */
+a {
+    color: #3963bb;
     text-decoration: none;
-  }
-  
-  a:hover {
+}
+a:hover {
     text-decoration: underline;
-  }
-  
-  /* Alertas */
-  ul {
+}
+
+/* Alertas */
+ul { list-style: none; padding: 0; margin-top: 15px; }
+li { padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 0.9rem; font-weight: bold; }
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ...mantenemos todo igual que antes para form, inputs, botones y animaciones... */
+
+/* Mensajes flash centrados */
+.flash-messages {
     list-style: none;
-    padding: 0;
-    margin-top: 15px;
-  }
-  
-  li {
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 8px;
+    padding: 10px 0 0 0;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.flash-messages li {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 8px;
+    margin: 5px 0;
     font-size: 0.9rem;
     font-weight: bold;
-  }
-  
-  li:contains("exitoso") {
-    background-color: #28a745; /* verde */
+    background-color: #e0f7e9; /* verde suave */
+    color: #1b1b1b;
+}
+
+.flash-messages li:contains("exitoso") {
+    background-color: #3ddc97; /* verde profesional */
     color: #fff;
-  }
-  
-  li:contains("incorrectos") {
+}
+
+.flash-messages li:contains("incorrectos") {
     background-color: #dc3545; /* rojo */
     color: #fff;
-  }
-  
-  
+}

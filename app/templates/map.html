@@ -8,17 +8,20 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-  <!-- Tu CSS -->
+  <!-- CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='map.css') }}">
 </head>
-<body class="page">
-  <div class="card">
-    <h2>Mapa de Incidentes</h2>
-    <div id="map"></div>
-  </div>
+<body>
+  <!-- Contenido -->
+  <main class="contenido">
+    <div class="card">
+      <h1>Mapa de Incidentes</h1>
+      <div id="map"></div>
+    </div>
+  </main>
 
   <script>
-    // Inicializamos el mapa sin coordenadas (usamos imagen como fondo)
+    // Inicializamos el mapa
     var map = L.map('map', {
         crs: L.CRS.Simple,
         minZoom: -1

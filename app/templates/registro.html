@@ -1,26 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Registro</title>
+    <meta charset="UTF-8">
+    <title>Registro de usuario</title>
     <link rel="stylesheet" href="../static/regist.css">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
-    </style> 
 </head>
 <body>
-    <form action="{{ url_for('registro_post') }}" method="POST">
-      <h2>Registro de Usuario</h2>
-        <label>Nombre:</label><br>
-        <input type="text" name="nombre" required><br>
-        <label>Apellido:</label><br>
-        <input type="text" name="apellido" required><br>
-        <label>Mail:</label><br>
-        <input type="email" name="mail" required><br>
-        <label>Legajo:</label><br>
-        <input type="text" name="legajo" required><br><br>
+    <form id="registroForm" action="{{ url_for('registro_post') }}" method="POST">
+        <h2>Registro de usuario</h2>
+        <h3>Completa tus datos</h3>
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="text" name="apellido" placeholder="Apellido" required>
+        <input type="email" name="mail" placeholder="Correo electrónico" required>
+        <input type="text" name="legajo" placeholder="Legajo" required>
         <button type="submit">Registrarse</button>
-        <p>¿Ya tenés cuenta? <a href="{{ url_for('login') }}">Iniciá sesión</a></p>
+        <button type="button" id="loginBtn">Iniciar sesión</button>
     </form>
+
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul>{% for msg in messages %}
@@ -28,5 +24,53 @@
         {% endfor %}</ul>
       {% endif %}
     {% endwith %}
+
+    <script>
+      const form = document.getElementById("registroForm");
+      const inputs = form.querySelectorAll("input");
+      const loginBtn = document.getElementById("loginBtn");
+
+      let submitting = false;
+
+      // Cargar datos guardados del localStorage
+      window.addEventListener("load", () => {
+        inputs.forEach(input => {
+          const savedValue = localStorage.getItem(input.name);
+          if (savedValue) input.value = savedValue;
+        });
+      });
+
+      // Guardar en localStorage mientras escribe
+      inputs.forEach(input => {
+        input.addEventListener("input", () => {
+          localStorage.setItem(input.name, input.value);
+        });
+      });
+
+      // Pop-up si intenta salir con datos cargados
+      window.addEventListener("beforeunload", (e) => {
+        if (submitting) return;
+        let hasData = false;
+        inputs.forEach(input => {
+          if (input.value.trim() !== "") hasData = true;
+        });
+        if (hasData) {
+          e.preventDefault();
+          e.returnValue = "Tienes datos sin guardar. ¿Seguro que quieres salir?";
+        }
+      });
+
+      // Botón para ir a login
+      loginBtn.addEventListener("click", () => {
+        submitting = true;
+        window.location.href = "{{ url_for('login') }}";
+      });
+
+      // Limpiar cache al enviar
+      form.addEventListener("submit", () => {
+        submitting = true;
+        localStorage.clear();
+      });
+    </script>
 </body>
 </html>

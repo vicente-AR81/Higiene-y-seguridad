@@ -1,29 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <title>Aplicación de prevención contra incidentes</title>
     <link rel="stylesheet" href="../static/login.css">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
-    </style> 
 </head>
 <body>
-    <form action="{{ url_for('login_post') }}" method="POST">
-        <h2>APLICACIÓN INCIDENTES</h2>
-        <h3>INICIAR SESIÓN</h2>
-        <label>MAIL:</label><br>
-        <input type="email" name="mail" required><br>
-        <label>LEGAJO:</label><br>
-        <input type="text" name="legajo" required><br><br>
-        <button type="submit">INGRESAR</button>
-        <p>¿NO TIENES CUENTA? <a href="{{ url_for('registro') }}">REGISTRATE</a></p>
+    <form id="loginForm" action="{{ url_for('login_post') }}" method="POST">
+        <h2>Aplicación de prevención contra incidentes</h2>
+        <h3>Iniciar sesión</h3>
+        <input type="email" name="mail" placeholder="Correo electrónico" required>
+        <input type="text" name="legajo" placeholder="Legajo" required>
+        <button type="submit">Ingresar</button>
+        <button type="button" id="registerBtn">Registrarse</button>
+
+        <!-- Mensajes flash centrados dentro del form -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class="flash-messages">{% for msg in messages %}
+              <li>{{ msg }}</li>
+            {% endfor %}</ul>
+          {% endif %}
+        {% endwith %}
     </form>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>{% for msg in messages %}
-          <li>{{ msg }}</li>
-        {% endfor %}</ul>
-      {% endif %}
-    {% endwith %}
+
+    <script>
+      const form = document.getElementById("loginForm");
+      const inputs = form.querySelectorAll("input");
+      const registerBtn = document.getElementById("registerBtn");
+
+      let submitting = false;
+
+      window.addEventListener("load", () => {
+        inputs.forEach(input => {
+          const savedValue = localStorage.getItem(input.name);
+          if (savedValue) input.value = savedValue;
+        });
+      });
+
+      inputs.forEach(input => {
+        input.addEventListener("input", () => {
+          localStorage.setItem(input.name, input.value);
+        });
+      });
+
+      window.addEventListener("beforeunload", (e) => {
+        if (submitting) return;
+        let hasData = false;
+        inputs.forEach(input => {
+          if (input.value.trim() !== "") hasData = true;
+        });
+        if (hasData) {
+          e.preventDefault();
+          e.returnValue = "Tienes datos sin guardar. ¿Seguro que quieres salir?";
+        }
+      });
+
+      registerBtn.addEventListener("click", () => {
+        submitting = true;
+        window.location.href = "{{ url_for('registro') }}";
+      });
+
+      form.addEventListener("submit", () => {
+        submitting = true;
+        localStorage.clear();
+      });
+    </script>
 </body>
 </html>
