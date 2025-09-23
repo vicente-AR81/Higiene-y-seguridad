@@ -76,7 +76,8 @@ def registro_post():
 @app.route('/index')
 def index():
     if 'usuario' in session:
-        return render_template('index.html', usuario=session['usuario'])
+        incidentes = Incidente.query.all()
+        return render_template('index.html', usuario=session['usuario'], incidentes=incidentes)
     else:
         return redirect(url_for('login'))
     

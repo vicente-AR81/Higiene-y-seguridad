@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../static/index.css">
 </head>
 <body>
+    <!-- Banner superior -->
     <header class="banner">
         <div class="usuario">
             ¡Hola {{ usuario.nombre }}!
@@ -16,11 +17,12 @@
         </div>
     </header>
 
+    <!-- Contenido principal -->
     <main class="contenido">
         <div class="card">
-            <h1>Pagina sobre riesgos e incidentes</h1>
+            <h1>Página sobre riesgos e incidentes</h1>
             <p class="intro">
-                Si haz identificado algun incidente o riesgo en el colegio te pedimos que ingreses al
+                Si has identificado algún incidente o riesgo en el colegio, te pedimos que ingreses al
                 formulario y lo reportes.
             </p>
             <div class="botones">
@@ -28,6 +30,33 @@
                 <a href="/map"><button>Mapa de incidentes</button></a>
             </div>
         </div>
+
+        <!-- Lista de incidentes -->
+        <section class="lista">
+            <h2>Lista de Incidentes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Sector</th>
+                        <th>Usuario</th>
+                        <th>Mail</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for incidente in incidentes %}
+                    <tr>
+                        <td>{{ incidente.descripcion }}</td>
+                        <td>{{ incidente.sector }}</td>
+                        <td>{{ incidente.nombre }} {{ incidente.apellido }}</td>
+                        <td>{{ incidente.mail }}</td>
+                        <td>{{ incidente.fecha }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
     </main>
 </body>
 </html>
