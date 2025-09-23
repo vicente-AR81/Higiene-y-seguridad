@@ -37,6 +37,20 @@ body {
     background-color: #324543;
 }
 
+.btn-form {
+    background-color: #3ddc97;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-form:hover {
+    background-color: #324543;
+}
+
 /* Contenido central */
 .contenido {
     padding: 40px 20px;

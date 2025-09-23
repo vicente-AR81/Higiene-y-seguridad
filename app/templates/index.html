@@ -11,6 +11,7 @@
             ¡Hola {{ usuario.nombre }}!
         </div>
         <div class="logout">
+            <a href="/form" class="btn-form">Formulario</a>
             <a href="{{ url_for('logout') }}" class="btn-logout">Cerrar sesión</a>
         </div>
     </header>
@@ -23,7 +24,6 @@
                 formulario y lo reportes.
             </p>
             <div class="botones">
-                <a href="/form"><button>Formulario</button></a>
                 <a href="/list"><button>Lista de incidentes</button></a>
                 <a href="/map"><button>Mapa de incidentes</button></a>
             </div>
