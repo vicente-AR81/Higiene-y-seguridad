@@ -77,7 +77,21 @@ def registro_post():
 def index():
     if 'usuario' in session:
         incidentes = Incidente.query.all()
-        return render_template('index.html', usuario=session['usuario'], incidentes=incidentes)
+
+        incidentes_json = []
+        for inc in incidentes:
+            incidentes_json.append({
+                "descripcion": inc.descripcion,
+                "sector": inc.sector,
+                "nombre": inc.nombre,
+                "apellido": inc.apellido,
+                "mail": inc.mail,
+                "fecha": inc.fecha.strftime("%Y-%m-%d %H:%M"),
+                "x": inc.x or 100,   # fallback
+                "y": inc.y or 100    # fallback
+            })
+
+        return render_template('index.html', usuario=session['usuario'], incidentes=incidentes, incidentes_json=json.dumps(incidentes_json))
     else:
         return redirect(url_for('login'))
     

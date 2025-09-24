@@ -45,7 +45,6 @@
       if (marker) map.removeLayer(marker);
       marker = L.marker(e.latlng).addTo(map);
 
-      // Guardar coordenadas
       document.getElementById('x').value = Math.round(e.latlng.lng);
       document.getElementById('y').value = Math.round(e.latlng.lat);
       document.getElementById('sector').value = "Seleccionado en mapa";

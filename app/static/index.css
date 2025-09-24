@@ -156,3 +156,45 @@ tbody tr:hover {
     background-color: #333;
     transition: 0.3s;
 }
+
+/* Mapa */
+.contenido {
+  display: flex;
+  justify-content: center;
+}
+
+.card-map {
+   background-color: #fff;
+  border: 2px solid #3ddc97;
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  animation: fadeIn 1s ease forwards;
+}
+
+.card-map h1 {
+  margin-bottom: 20px;
+  text-transform: lowercase;
+}
+
+.card-map h1::first-letter {
+  text-transform: uppercase;
+}
+
+/* Mapa */
+#map {
+  width: 100%;
+  height: 600px; /* un poquito más alto */
+  border: 2px solid #3ddc97;
+  border-radius: 10px;
+  box-shadow: 0 0 16px rgba(0,0,0,0.2);
+  background: #fff;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
