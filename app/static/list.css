@@ -1,70 +1,84 @@
 body {
-    margin: 0;
-    font-family: "Archivo Black", sans-serif;
-    background-color: #000;
-    color: #39633b;
-    text-align: center;
-    padding: 20px;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-    color: #39633b;
-  }
+  margin: 0;
+  padding: 20px;
+  font-family: "Archivo Black", sans-serif;
+  background-color: #000;
+  color: #39633b;
+  text-align: center;
+}
 
-  table {
-    width: 90%;
-    margin: 0 auto;
-    border-collapse: collapse;
-    background-color: #111; /* fondo más claro dentro del negro */
-    border: 2px solid #39633b;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(23, 250, 3, 0.4);
-  }
+/* =========================
+   TITULOS
+========================= */
+h2 {
+  margin-bottom: 20px;
+  color: #39633b;
+}
 
-  thead {
-    background-color: #39633b;
-    color: #000;
-  }
-  
-  th {
-    padding: 12px;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-  }
-  
-  td {
-    padding: 10px;
-    color: #f7f1e4;
-    border-bottom: 1px solid #333;
-  }
-  
-  /* Alternar colores de filas */
-  tbody tr:nth-child(even) {
-    background-color: #1a1a1a;
-  }
-  
-  tbody tr:hover {
-    background-color: #333;
-    transition: 0.3s;
-  }
+/* =========================
+   TABLAS
+========================= */
+table {
+  width: 90%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: #111;              /* Fondo más claro dentro del negro */
+  border: 2px solid #39633b;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(23, 250, 3, 0.4);
+}
 
-  .botones {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding-top: 50px;
-  }
-  
-  button {
-    background-color: #39633b;
-    color: #000;
-    border: none;
-    border-radius: 6px;
-    padding: 12px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s;
-  }
+thead {
+  background-color: #39633b;
+  color: #000;
+}
+
+th {
+  padding: 12px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+td {
+  padding: 10px;
+  color: #f7f1e4;
+  border-bottom: 1px solid #333;
+}
+
+/* Alternar colores de filas */
+tbody tr:nth-child(even) {
+  background-color: #1a1a1a;
+}
+
+/* Hover fila */
+tbody tr:hover {
+  background-color: #333;
+  transition: background-color 0.3s;
+}
+
+/* =========================
+   BOTONES
+========================= */
+.botones {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding-top: 50px;
+}
+
+button {
+  background-color: #39633b;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2a472a; /* un tono más oscuro */
+}
