@@ -15,7 +15,7 @@
   <div class="card">
     <h2>Reportar incidente</h2>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       <label>Seleccione el lugar del incidente:</label>
       <div id="map" required></div>
 
@@ -26,6 +26,9 @@
 
       <label for="descripcion">Descripción del incidente</label>
       <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+
+      <label for="foto">Subir foto del incidente</label>
+      <input type="file" id="foto" name="foto" accept="image/*" multiple>
 
       <button type="submit">Enviar</button>
     </form>

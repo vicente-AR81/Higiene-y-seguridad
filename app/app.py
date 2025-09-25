@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+import os
+from flask import Flask, render_template, request, redirect, url_for, session, flash, current_app
 from flask_sqlalchemy import SQLAlchemy
 import json
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta_segura'
@@ -104,7 +106,7 @@ def logout():
 def form():
     if 'usuario' not in session:
         return redirect(url_for('login'))
-
+    
     if request.method == 'POST':
         descripcion = request.form['descripcion']
         sector = request.form['sector']
@@ -122,10 +124,26 @@ def form():
             x=int(x) if x else None,
             y=int(y) if y else None
         )
+    
+        if 'foto' in request.files:
+          upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+        os.makedirs(upload_folder, exist_ok=True)
+
+        # Guardar las fotos
+        if 'foto' in request.files:
+            fotos = request.files.getlist('foto')
+            for foto in fotos:
+                if foto and foto.filename != '':
+                    filename = secure_filename(foto.filename)
+                    filepath = os.path.join(upload_folder, filename)
+                    foto.save(filepath)
+                    print(f"Foto guardada en: {filepath}") 
+
+
         db.session.add(nuevo_incidente)
         db.session.commit()
         flash("Incidente reportado con éxito.")
-        return redirect(url_for('list'))
+        return redirect(url_for('index'))
 
 
     return render_template('form.html')
