@@ -9,6 +9,7 @@ app.secret_key = 'clave_secreta_segura'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://us3nqfawfptvkb6y:xEQCWJCnlS8JQSgNWUFm@balklvwchlpbnxgbnmai-mysql.services.clever-cloud.com:3306/balklvwchlpbnxgbnmai'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads')
 
 db = SQLAlchemy(app)
 
@@ -27,8 +28,9 @@ class Incidente(db.Model):
     apellido = db.Column(db.String(100), nullable=False)
     mail = db.Column(db.String(120), nullable=False)
     fecha = db.Column(db.DateTime, default=db.func.current_timestamp())
-    x = db.Column(db.Integer)   # nueva columna
-    y = db.Column(db.Integer)   # nueva columna
+    x = db.Column(db.Integer)
+    y = db.Column(db.Integer)
+    foto = db.Column(db.String(255))
 
 
 @app.route('/')
@@ -90,7 +92,8 @@ def index():
                 "mail": inc.mail,
                 "fecha": inc.fecha.strftime("%Y-%m-%d %H:%M"),
                 "x": inc.x or 100,   # fallback
-                "y": inc.y or 100    # fallback
+                "y": inc.y or 100,    # fallback
+                "foto": url_for('static', filename=f"uploads/{inc.foto}") if inc.foto else None
             })
 
         return render_template('index.html', usuario=session['usuario'], incidentes=incidentes, incidentes_json=json.dumps(incidentes_json))
@@ -115,6 +118,7 @@ def form():
 
         usuario = session['usuario']
 
+        # Crear incidente base
         nuevo_incidente = Incidente(
             descripcion=descripcion,
             sector=sector,
@@ -124,27 +128,21 @@ def form():
             x=int(x) if x else None,
             y=int(y) if y else None
         )
-    
-        if 'foto' in request.files:
-          upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
-        os.makedirs(upload_folder, exist_ok=True)
 
-        # Guardar las fotos
+        # Guardar foto si existe
         if 'foto' in request.files:
-            fotos = request.files.getlist('foto')
-            for foto in fotos:
-                if foto and foto.filename != '':
-                    filename = secure_filename(foto.filename)
-                    filepath = os.path.join(upload_folder, filename)
-                    foto.save(filepath)
-                    print(f"Foto guardada en: {filepath}") 
-
+            foto = request.files['foto']
+            if foto and foto.filename != '':
+                filename = secure_filename(foto.filename)
+                upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+                os.makedirs(upload_folder, exist_ok=True)
+                foto.save(os.path.join(upload_folder, filename))
+                nuevo_incidente.foto = filename  # ✅ guardamos el nombre en la base
 
         db.session.add(nuevo_incidente)
         db.session.commit()
         flash("Incidente reportado con éxito.")
         return redirect(url_for('index'))
-
 
     return render_template('form.html')
 
@@ -174,7 +172,8 @@ def mapa():
             "mail": inc.mail,
             "fecha": inc.fecha.strftime("%Y-%m-%d %H:%M"),
             "x": inc.x or 100,   # fallback
-            "y": inc.y or 100    # fallback
+            "y": inc.y or 100,   # fallback
+            "foto": url_for('static', filename=f"uploads/{inc.foto}") if inc.foto else None
         })
 
     return render_template("map.html", incidentes_json=json.dumps(incidentes_json))
@@ -185,5 +184,3 @@ with app.app_context():
     
 if __name__ == '__main__':
     app.run(debug=True, port=3000)
-
-

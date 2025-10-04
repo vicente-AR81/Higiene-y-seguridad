@@ -87,7 +87,8 @@
                 "<b>Sector:</b> " + incidente.sector + "<br>" +
                 "<b>Descripción:</b> " + incidente.descripcion + "<br>" +
                 "<b>Usuario:</b> " + incidente.nombre + " " + incidente.apellido + "<br>" +
-                "<b>Fecha:</b> " + incidente.fecha
+                "<b>Fecha:</b> " + incidente.fecha + "<br>" +
+                (incidente.foto ? `<img src="${incidente.foto}" style="width:150px;margin-top:8px;border-radius:6px;">` : "")
             );
         });
 
