@@ -146,39 +146,6 @@ def form():
 
     return render_template('form.html')
 
-
-@app.route('/list')
-def list():
-    if 'usuario' not in session:
-        return redirect(url_for('login'))
-
-    incidentes = Incidente.query.all()
-    return render_template('list.html', incidentes=incidentes)
-
-@app.route('/map')
-def mapa():
-    if 'usuario' not in session:
-        return redirect(url_for('login'))
-
-    incidentes = Incidente.query.all()
-
-    incidentes_json = []
-    for inc in incidentes:
-        incidentes_json.append({
-            "descripcion": inc.descripcion,
-            "sector": inc.sector,
-            "nombre": inc.nombre,
-            "apellido": inc.apellido,
-            "mail": inc.mail,
-            "fecha": inc.fecha.strftime("%Y-%m-%d %H:%M"),
-            "x": inc.x or 100,   # fallback
-            "y": inc.y or 100,   # fallback
-            "foto": url_for('static', filename=f"uploads/{inc.foto}") if inc.foto else None
-        })
-
-    return render_template("map.html", incidentes_json=json.dumps(incidentes_json))
-
-
 with app.app_context():
     db.create_all()
     
