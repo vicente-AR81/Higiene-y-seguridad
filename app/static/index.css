@@ -194,6 +194,7 @@ tbody tr:hover {
   border-radius: 10px;
   border: 2px solid var(--color-principal);
   animation: fadeIn 1.5s ease;
+  z-index: 1;
 }
 /* =========================
    BOTÓN REPORTAR 
