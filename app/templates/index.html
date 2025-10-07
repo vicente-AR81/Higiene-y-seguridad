@@ -38,6 +38,7 @@
                             <th>Usuario</th>
                             <th>Mail</th>
                             <th>Fecha</th>
+                            <th>Resuelto</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,12 +49,31 @@
                             <td>{{ incidente.nombre }} {{ incidente.apellido }}</td>
                             <td>{{ incidente.mail }}</td>
                             <td>{{ incidente.fecha }}</td>
+                            <td>
+                                {% if usuario.es_admin %}
+                                    <input type="checkbox" {% if incidente.resuelto %}checked{% endif %} onchange="actualizarResuelto({{ incidente.id }}, this.checked)">
+                                    {% else %}
+                                        <input type="checkbox" {% if incidente.resuelto %}checked{% endif %} disabled>
+                                    {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </section>
+
+        <script>
+            function actualizarResuelto(id, estado) {
+                fetch(`/actualizar_resuelto/${id}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ resuelto: estado })
+                }).then(response => {
+                if (!response.ok) alert("Error al actualizar el estado.");
+            });
+            }
+        </script>
 
         <!-- Mapa -->
         <div class="card-map">
@@ -84,7 +104,6 @@
         incidentes.forEach(function(incidente) {
             var marker = L.marker([incidente.y, incidente.x]).addTo(map);
             marker.bindPopup(
-                "<b>Sector:</b> " + incidente.sector + "<br>" +
                 "<b>Tipo de riesgo:</b> " + (incidente.tipo_riesgo || "No especificado") + "<br>" +
                 "<b>Descripción:</b> " + incidente.descripcion + "<br>" +
                 "<b>Usuario:</b> " + incidente.nombre + " " + incidente.apellido + "<br>" +

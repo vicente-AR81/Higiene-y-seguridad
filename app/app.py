@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, session, flash, current_app
+from flask import Flask, render_template, request, redirect, url_for, session, flash, current_app, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import json
 from werkzeug.utils import secure_filename
@@ -19,6 +19,7 @@ class Usuario(db.Model):
     apellido = db.Column(db.String(100), nullable=False)
     mail = db.Column(db.String(120), unique=True, nullable=False)
     legajo = db.Column(db.String(20), unique=True, nullable=False)
+    es_admin = db.Column(db.Boolean, default=False)
 
 class Incidente(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,6 +33,7 @@ class Incidente(db.Model):
     y = db.Column(db.Integer)
     foto = db.Column(db.String(255))
     tipo_riesgo = db.Column(db.String(50))
+    resuelto = db.Column(db.Boolean, default=False)
 
 
 @app.route('/')
@@ -49,7 +51,8 @@ def login_post():
             "id": usuario.id,
             "nombre": usuario.nombre,
             "apellido": usuario.apellido,
-            "mail": usuario.mail
+            "mail": usuario.mail,
+            "es_admin": usuario.es_admin
         }
         return redirect(url_for('index'))
     else:
@@ -153,6 +156,20 @@ def form():
     ]
     return render_template('form.html', tipos_riesgo=tipos_riesgo)
 
+
+@app.route('/actualizar_resuelto/<int:id>', methods=['POST'])
+def actualizar_resuelto(id):
+    if 'usuario' not in session or not session['usuario'].get('es_admin'):
+        return jsonify({"error": "No autorizado"}), 403
+
+    data = request.get_json()
+    estado = data.get('resuelto', False)
+
+    incidente = Incidente.query.get_or_404(id)
+    incidente.resuelto = estado
+    db.session.commit()
+
+    return jsonify({"success": True})
 
 with app.app_context():
     db.create_all()
