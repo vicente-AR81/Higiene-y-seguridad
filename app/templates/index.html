@@ -34,7 +34,7 @@
                     <thead>
                         <tr>
                             <th>Descripción</th>
-                            <th>Sector</th>
+                            <th>Tipo</th>
                             <th>Usuario</th>
                             <th>Mail</th>
                             <th>Fecha</th>
@@ -44,7 +44,7 @@
                         {% for incidente in incidentes %}
                         <tr>
                             <td>{{ incidente.descripcion }}</td>
-                            <td>{{ incidente.sector }}</td>
+                            <td>{{ incidente.tipo_riesgo }}</td>
                             <td>{{ incidente.nombre }} {{ incidente.apellido }}</td>
                             <td>{{ incidente.mail }}</td>
                             <td>{{ incidente.fecha }}</td>
@@ -85,6 +85,7 @@
             var marker = L.marker([incidente.y, incidente.x]).addTo(map);
             marker.bindPopup(
                 "<b>Sector:</b> " + incidente.sector + "<br>" +
+                "<b>Tipo de riesgo:</b> " + (incidente.tipo_riesgo || "No especificado") + "<br>" +
                 "<b>Descripción:</b> " + incidente.descripcion + "<br>" +
                 "<b>Usuario:</b> " + incidente.nombre + " " + incidente.apellido + "<br>" +
                 "<b>Fecha:</b> " + incidente.fecha + "<br>" +

@@ -27,6 +27,14 @@
       <label for="descripcion">Descripción del incidente</label>
       <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
 
+      <label>Tipo de Riesgo:</label>
+        <select name="tipo_riesgo" required>
+          <option value="">Seleccionar...</option>
+          {% for riesgo in tipos_riesgo %}
+              <option value="{{ riesgo }}">{{ riesgo }}</option>
+          {% endfor %}
+        </select>
+
       <label for="foto">Subir foto del incidente</label>
       <input type="file" id="foto" name="foto" accept="image/*" multiple>
 

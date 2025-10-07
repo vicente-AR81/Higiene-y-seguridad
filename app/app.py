@@ -31,6 +31,7 @@ class Incidente(db.Model):
     x = db.Column(db.Integer)
     y = db.Column(db.Integer)
     foto = db.Column(db.String(255))
+    tipo_riesgo = db.Column(db.String(50))
 
 
 @app.route('/')
@@ -87,6 +88,7 @@ def index():
             incidentes_json.append({
                 "descripcion": inc.descripcion,
                 "sector": inc.sector,
+                "tipo_riesgo": inc.tipo_riesgo,
                 "nombre": inc.nombre,
                 "apellido": inc.apellido,
                 "mail": inc.mail,
@@ -113,15 +115,16 @@ def form():
     if request.method == 'POST':
         descripcion = request.form['descripcion']
         sector = request.form['sector']
+        tipo_riesgo = request.form.get('tipo_riesgo')  
         x = request.form.get('x', None)
         y = request.form.get('y', None)
 
         usuario = session['usuario']
 
-        # Crear incidente base
         nuevo_incidente = Incidente(
             descripcion=descripcion,
             sector=sector,
+            tipo_riesgo=tipo_riesgo,  
             nombre=usuario['nombre'],
             apellido=usuario['apellido'],
             mail=usuario['mail'],
@@ -137,14 +140,19 @@ def form():
                 upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
                 os.makedirs(upload_folder, exist_ok=True)
                 foto.save(os.path.join(upload_folder, filename))
-                nuevo_incidente.foto = filename  # ✅ guardamos el nombre en la base
+                nuevo_incidente.foto = filename
 
         db.session.add(nuevo_incidente)
         db.session.commit()
         flash("Incidente reportado con éxito.")
         return redirect(url_for('index'))
 
-    return render_template('form.html')
+    tipos_riesgo = [
+        "Eléctrico", "Físico", "Químico", "Biológico",
+        "Ergonómico", "Mecánico", "Ambiental", "Estructural"
+    ]
+    return render_template('form.html', tipos_riesgo=tipos_riesgo)
+
 
 with app.app_context():
     db.create_all()
