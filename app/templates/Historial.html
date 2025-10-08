@@ -32,7 +32,9 @@
           <td>{{ incidente.fecha.strftime('%d/%m/%Y') }}</td>
           <td>
             {% if incidente.foto %}
-              <img src="${incidente.foto}" style="width:80px;border-radius:6px;">
+            <img src="{{ url_for('static', filename='uploads/' + incidente.foto) }}"
+              alt="Foto del incidente"
+              style="width:80px; border-radius:6px;">
             {% else %}
               -
             {% endif %}
@@ -41,6 +43,9 @@
         {% endfor %}
       </tbody>
     </table>
+  </div>
+  <div style="text-align: center; margin-top: 20px;">
+    <a href="/index" class="btn-form">Volver</a>
   </div>
 </section>
 {% endblock %}

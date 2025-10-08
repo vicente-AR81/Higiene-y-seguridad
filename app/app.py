@@ -84,7 +84,7 @@ def registro_post():
 @app.route('/index')
 def index():
     if 'usuario' in session:
-        incidentes = Incidente.query.all()
+        incidentes = Incidente.query.filter_by(resuelto=False).all()
 
         incidentes_json = []
         for inc in incidentes:
