@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/index.css">
+    <title>Document</title>
+</head>
+<body>
+{% block content %}
+<section class="lista">
+  <h2>Historial de Incidentes Resueltos</h2>
+  <div class="tabla-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Descripción</th>
+          <th>Tipo</th>
+          <th>Usuario</th>
+          <th>Mail</th>
+          <th>Fecha</th>
+          <th>Foto</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for incidente in incidentes %}
+        <tr>
+          <td>{{ incidente.descripcion }}</td>
+          <td>{{ incidente.tipo_riesgo }}</td>
+          <td>{{ incidente.nombre }} {{ incidente.apellido }}</td>
+          <td>{{ incidente.mail }}</td>
+          <td>{{ incidente.fecha.strftime('%d/%m/%Y') }}</td>
+          <td>
+            {% if incidente.foto %}
+              <img src="${incidente.foto}" style="width:80px;border-radius:6px;">
+            {% else %}
+              -
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
+</body>
+</html>

@@ -171,6 +171,17 @@ def actualizar_resuelto(id):
 
     return jsonify({"success": True})
 
+
+@app.route('/Hist')
+def Historial():
+    if 'usuario' not in session:
+        return redirect(url_for('login'))
+
+    incidentes = Incidente.query.filter_by(resuelto=True).order_by(Incidente.fecha.desc()).all()
+    usuario = Usuario.query.get(session['usuario']['id'])
+    return render_template('Historial.html', incidentes=incidentes, usuario=usuario)
+
+
 with app.app_context():
     db.create_all()
     
